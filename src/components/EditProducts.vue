@@ -1,15 +1,12 @@
 <template>
-    <v-container>
-        <h1>Catalog</h1>
+    <h2>Edit products</h2>
         <v-row>
             <v-col v-for="product in products" :key="product.id" md="6" lg="5" xl="3">
                 <ProductCard
                     :product="product"
-                    :index="product.id"
                 />
             </v-col>
         </v-row>
-    </v-container>
 </template>
 
 <script setup lang="ts">

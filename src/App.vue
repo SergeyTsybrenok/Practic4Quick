@@ -10,7 +10,7 @@
         </v-app-bar>
       <router-view />
     </v-main>
-    <footer/>
+    <Footer/>
   </v-app>
 </template>
 
