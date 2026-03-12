@@ -9,6 +9,7 @@ import EditProducts from '@/components/EditProducts.vue'
 import Users from '@/components/Users.vue'
 import Registration from '@/components/Registration.vue'
 import Login from '@/components/Login.vue'
+import LargeProductCard from '@/components/LargeProductCard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,6 +30,17 @@ const router = createRouter({
       name: "catalog"
     },
     {
+      path: '/product/:id',
+      component: LargeProductCard,
+      name: "product-detail",
+      // beforeEnter: (to) => {
+      //   const id = Number(to.params.id);
+      //   if (isNaN(id)) {
+      //     return { name: 'catalog' }; //TODO 404
+      //   }
+      // }
+    },
+    {
       path: '/account',
       component: Account,
       name: "account",
@@ -47,6 +59,10 @@ const router = createRouter({
         {path: 'users', component: Users, name: 'users'},
       ]
     },
+    {
+      path: "/:pathMatch(.*)*",
+      redirect: { name: "catalog" } //TODO to page 404
+    }
   ],
 })
 

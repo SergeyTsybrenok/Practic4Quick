@@ -27,6 +27,7 @@
         name="price" 
         :counter="10" 
         v-model="newProduct.price" 
+        type="number"
         label="Price" 
         required
       ></v-text-field>

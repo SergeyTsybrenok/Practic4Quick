@@ -24,8 +24,15 @@
 
 <script setup lang="ts">
 import type { Product } from '@/types/product';
+import { useRouter } from 'vue-router';
 
 const props = defineProps<{
     product: Product;
 }>();
+
+const router = useRouter();
+router.push({
+  name: "product-detail",
+  params: { id: props.product.id }
+})
 </script>
