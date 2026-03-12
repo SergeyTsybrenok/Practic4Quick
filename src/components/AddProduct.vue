@@ -1,27 +1,9 @@
 <template>
 <v-container>
-  <v-snackbar
-  v-model="snackbar.show"
-  :color="snackbar.color"
-  timeout="3000"
-  location="top"
->
-  {{ snackbar.text }}
-  
-  <template v-slot:actions>
-    <v-btn
-      color="white"
-      variant="text"
-      @click="snackbar.show = false"
-    >
-    Close
-    </v-btn>
-  </template>
-</v-snackbar>
 
+  <Popup :popup="popup"/>
   
   <v-form @submit.prevent>
-
   <v-row>
     <v-col cols="12" md="6">
       <h2 class="text-center">Information</h2>
@@ -59,11 +41,10 @@
     
     <v-col cols="12" md="5">
       <h2 class="text-center">Preview</h2>
-      <ProductCard :product="newProduct" :index="1" />
+      <ProductCard :product="newProduct" />
     </v-col>
   </v-row>
 
-  <!-- Кнопка теперь центрирована -->
   <v-row justify="center" class="mt-4">
     <v-col cols="auto">
       <v-btn @click="addProduct" type="submit" size="large" color="success">Add</v-btn>
@@ -76,34 +57,23 @@
 </template>
 <script setup lang="ts">
 import ProductCard from '@/components/ProductCard.vue';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import type { Product } from '@/types/product';
-import { useProduct } from '@/composables/useProduct';
+import { useProductStore } from '@/stores/useProductStore';
+import { usePopup } from '@/composables/usePopup';
+import Popup from './Popup.vue';
 
-const product = useProduct();
+const popup = usePopup();
 
-// TODO use Product type (problem)
-const newProduct = reactive({
+const product = useProductStore();
+
+const newProduct: Product = reactive({
   id: 1,
   name: "",
   description: "",
   price: 1000,
   imageUrl: ""
 })
-
-const snackbar = ref({
-  show: false,
-  text: '',
-  color: 'success' as 'success' | 'error' | 'info' | 'warning'
-})
-
-const showMessage = (message: string, color: 'success' | 'error' | 'info' | 'warning' = 'success') => {
-  snackbar.value = {
-    show: true,
-    text: message,
-    color
-  }
-}
 
 function resetFormM() {
   newProduct.name = "";
@@ -114,13 +84,20 @@ function resetFormM() {
 
 const addProduct = () => {
   if (newProduct.name && newProduct.price && newProduct.description && newProduct.imageUrl) {
-    showMessage('Product add Succes', 'success')
-    resetFormM()
-    product.addProduct(newProduct)
-    console.log(product.getProductByIndex(0));
-    
+    popup.showMessage('Product add Succes', 'success')
+    //Fix problem with ref to unlink
+    const productToAdd: Product = {
+      name: newProduct.name,  
+      description: newProduct.description,
+      price: newProduct.price,  
+      imageUrl: newProduct.imageUrl  
+    }
+
+    product.addProduct(productToAdd);
+
+    // resetFormM()
   } else {
-    showMessage('Fill in all required fields', 'error')
+    popup.showMessage('Fill in all required fields', 'error')
   }
 }
 </script>

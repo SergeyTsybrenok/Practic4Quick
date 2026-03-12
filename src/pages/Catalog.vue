@@ -2,10 +2,9 @@
     <v-container>
         <h1>Catalog</h1>
         <v-row>
-            <v-col v-for="product in products" :key="product.id" md="6" lg="5" xl="3">
+            <v-col v-for="product in products" md="6" lg="5" xl="3">
                 <ProductCard
                     :product="product"
-                    :index="product.id"
                 />
             </v-col>
         </v-row>
@@ -14,8 +13,8 @@
 
 <script setup lang="ts">
 import ProductCard from '@/components/ProductCard.vue';
-import { useProduct } from '@/composables/useProduct';
+import { useProductStore } from '@/stores/useProductStore';
 
-const { products, addProduct, removeProductByIndex } = useProduct();
+const { products, addProduct, removeProductByIndex } = useProductStore();
 
 </script>

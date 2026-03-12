@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import ProductCard from '@/components/ProductCard.vue';
-import { useProduct } from '@/composables/useProduct';
+import { useProductStore } from '@/stores/useProductStore';
 
-const { products, addProduct, removeProductByIndex } = useProduct();
+const { products, addProduct, removeProductByIndex } = useProductStore();
 
 </script>
