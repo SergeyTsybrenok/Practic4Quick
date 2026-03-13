@@ -82,8 +82,9 @@ const password = ref<string>("");
 //#endregion
 
 function AddUser() {
-  if (typeof(passwordRules) == "boolean" && firstNameRules && mailRules) {
+  if (passwordRules && firstNameRules && mailRules) {
     popup.showMessage("User added!", "success");
+    useUsers.addUser(user);
   }
   else {
     popup.showMessage("Please check your validation", "error");

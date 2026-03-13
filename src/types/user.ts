@@ -6,6 +6,9 @@ export interface User {
     Number: number;
     Email: string;
     PasswordHash: string;
+    Admin?: boolean;
     Likes?: number[];
-    Card?: number[];
+    Card?: number[]; //TODO and here will be id from card
+    History?: number[]; //TODO make card into other file
+    // after that we just linkup History to card
 }
