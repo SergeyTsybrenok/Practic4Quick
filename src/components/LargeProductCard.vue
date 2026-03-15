@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12">
         <v-btn @click="router.back()" prepend-icon="mdi-arrow-left" variant="text" class="mb-4">
-          Назад
+          Back
         </v-btn>
       </v-col>
     </v-row>
@@ -35,13 +35,13 @@
             
             <v-divider class="my-4"></v-divider>
             
-            <h3 class="text-h6 mb-2">Описание:</h3>
+            <h3 class="text-h6 mb-2">Description:</h3>
             <p class="text-body-1">{{ product.description }}</p>
           </v-card-text>
 
           <v-card-actions>
             <v-btn color="primary" block size="large">
-              Добавить в корзину
+              Add to card
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -51,7 +51,7 @@
     <v-row v-else>
       <v-col cols="12" class="text-center">
         <v-progress-circular indeterminate color="primary" size="64"></v-progress-circular>
-        <p class="mt-4">Загрузка продукта...</p>
+        <p class="mt-4">Loading product...</p>
       </v-col>
     </v-row>
   </v-container>

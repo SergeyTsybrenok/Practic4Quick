@@ -10,6 +10,7 @@ import Users from '@/components/Users.vue'
 import Registration from '@/components/Registration.vue'
 import Login from '@/components/Login.vue'
 import LargeProductCard from '@/components/LargeProductCard.vue'
+import UserAccount from '@/components/UserAccount.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,7 @@ const router = createRouter({
       children: [
         {path: 'createUser', component: Registration, name: 'registration'},
         {path: 'login', component: Login, name: 'login'},
+        {path: '/user/:login', component: UserAccount, name: 'user-account'},
       ]
     },
     {

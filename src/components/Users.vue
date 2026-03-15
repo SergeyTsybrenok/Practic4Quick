@@ -1,43 +1,117 @@
 <template>
-    <h2>Users</h2>
-    <v-data-table :headers="headers" :items="useUsers.users" >
-
-    <v-btn
+  <h2>Users</h2>
+  <v-data-table :headers="headers" :items="useUsers.users">
+    <template v-slot:item.actions="{ item }">
+      <v-btn
         variant="text"
         icon
         @click="edit(item)"
-        @mouseenter="register($event)"
       >
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
 
-      <v-btn variant="text" icon @click="remove(item.id)">
+      <v-btn variant="text" icon @click="remove(item.id as any)">
         <v-icon>mdi-delete</v-icon>
       </v-btn>
-    </v-data-table>
+    </template>
+  </v-data-table>
 
-      <v-dialog v-model="dialog" :activator="activator" max-width="500">
-    </v-dialog>
+  <v-dialog v-model="dialog" max-width="500">
+    <v-card>
+      <v-card-title>Modify User</v-card-title>
+      
+      <v-card-text>
+        <v-text-field
+          v-model="editedUser.name"
+          label="Name"
+        ></v-text-field>
+        
+        <v-text-field
+          v-model="editedUser.phone"
+          label="Phone"
+          type="number"
+        ></v-text-field>
+        
+        <v-text-field
+          v-model="editedUser.email"
+          label="Email"
+          type="email"
+        ></v-text-field>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="error" variant="text" @click="dialog = false">Cancel</v-btn>
+        <v-btn color="success" variant="text" @click="save">Save</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from '@/stores/app';
-import { ref } from 'vue';
+import { useAppStore } from "@/stores/app";
+import { ref } from "vue";
+import type { User } from "@/types/user";
 
 const dialog = ref(false);
-const activator = ref(null);
 
 const useUsers = useAppStore();
 
 const headers = [
-    { title: "Name", value: "Name" },
-    { title: "Phone", value: "Number" },
-    { title: "Mail", value: "Email" },
-    { title: "Password Hash", value: "PasswordHash" },
-    { title: "Admin", value: "Admin" },
-    { title: "Likes", value: "Likes" },
-    { title: "Card", value: "Card" },
-    // { title: "History", value: "" }, //TODO
+  { title: "Name", value: "Name" },
+  { title: "Login", value: "Login" },
+  { title: "Phone", value: "Number" },
+  { title: "Mail", value: "Email" },
+  { title: "Password Hash", value: "PasswordHash" },
+  { title: "Admin", value: "Admin" },
+  { title: "Likes", value: "Likes" },
+  { title: "Card", value: "Card" },
+  // { title: "History", value: "" }, //TODO
+  { title: "Actions", value: "actions", sortable: false },
 ];
 
+const editedUser = ref({
+  id: null as number | null,
+  name: "",
+  login: "",
+  phone: "",
+  email: ""
+});
+
+const selectedId = ref<number | null>(null);
+
+function edit(item: User) {
+  selectedId.value = item.id || null;
+  editedUser.value = {
+    id: item.id || null,
+    name: item.Name,
+    login: item.Login,
+    phone: item.Number.toString(),
+    email: item.Email
+  };
+  dialog.value = true;
+}
+
+function save() {
+  if (selectedId.value) {
+    useUsers.updateUser(selectedId.value, {
+      id: selectedId.value,
+      Name: editedUser.value.name,
+      Login: editedUser.value.name,
+      Number: parseInt(editedUser.value.phone) || 0,
+      Email: editedUser.value.email,
+      PasswordHash: "", 
+      Admin: false,
+      Likes: [],
+      Card: []
+    });
+  }
+  dialog.value = false;
+}
+
+function remove(id: number) {
+  if (confirm('Are you sure you want to delete this user?')) {
+    useUsers.deleteUserById(id);
+  }
+}
 </script>
