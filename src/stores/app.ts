@@ -13,10 +13,6 @@ export const useAppStore = defineStore("app", () => {
   }
 
   function tryLogin(login: string, password: string) {
-    console.log(`login: ${login}, password: ${password}.`);
-    console.log(`users: ${users.value}`);
-    
-    
     if (checkLoginUniq(login)) { //TODO remove double check
       currentUser.value = users.value.find((user) => user.Login === login); // TODO remove double check
       return true
@@ -29,6 +25,10 @@ export const useAppStore = defineStore("app", () => {
   function checkCurrentUser(): boolean {
     // return currentUser.value ? true : false
     return !!currentUser.value //another version
+  }
+
+  function logout() {
+    currentUser.value = undefined;
   }
 
   function generateId(): number {
@@ -69,6 +69,6 @@ export const useAppStore = defineStore("app", () => {
     }
   }
 
-  return { users, currentUser, addUser, deleteUserById, getUserById, updateUser, checkCurrentUser, tryLogin };
+  return { users, currentUser, addUser, deleteUserById, getUserById, updateUser, checkCurrentUser, tryLogin, logout };
   // TODO incapsulate currentUser
 });

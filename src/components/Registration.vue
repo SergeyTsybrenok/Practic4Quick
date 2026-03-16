@@ -63,6 +63,7 @@ import type { User } from "@/types/user";
 import { reactive, ref } from "vue";
 import Popup from "./Popup.vue";
 import { useAppStore } from "@/stores/app"; //TODO rename to useUserStore
+import router from "@/router";
 
 const useUsers = useAppStore();
 const popup = usePopup();
@@ -97,6 +98,9 @@ function AddUser() {
   if (passwordRules && firstNameRules && mailRules) {
     popup.showMessage("User added!", "success");
     useUsers.addUser(user);
+    router.push({
+      name: "login",
+    });
   } else {
     popup.showMessage("Please check your validation", "error");
   }

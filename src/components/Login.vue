@@ -41,9 +41,13 @@ function tryLogin() {
   if (useUsers.tryLogin(loginVariables.login, loginVariables.password)) {
     popup.showMessage(`Login in account: ${loginVariables.login} ${useUsers.tryLogin(loginVariables.login, loginVariables.password)}`)
 
+    const stringify = JSON.stringify(useUsers.users);
+    const blob = new Blob([stringify], { type: "application/json;charset=utf-8;" });
+
+
     router.push({
     name: "user-account",
-    params: { login: loginVariables.login }
+    params: { login: useUsers.currentUser?.Login }
   })
   }
   else{
