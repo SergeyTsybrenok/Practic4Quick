@@ -1,7 +1,7 @@
 <template>
   <h2>Login</h2>
 
-  <v-form @submit.prevent" name="login-form">
+  <v-form @submit.prevent name="login-form">
     <v-text-field
       name="login"
       :counter="42"
@@ -47,11 +47,6 @@ function tryLogin() {
     popup.showMessage(
       `Login in account: ${loginVariables.login} ${useUsers.tryLogin(loginVariables.login, loginVariables.password)}`,
     );
-
-    const stringify = JSON.stringify(useUsers.users);
-    const blob = new Blob([stringify], {
-      type: "application/json;charset=utf-8;",
-    });
 
     router.push({
       name: "user-account",
