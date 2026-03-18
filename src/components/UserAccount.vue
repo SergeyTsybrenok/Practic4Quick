@@ -1,10 +1,18 @@
 <template>
     <v-container>
-        <h2>Hello {{ useUsers.currentUser?.Name }}</h2>
-
-        <p>{{ useUsers.currentUser?.Email }}</p>
-        <p>{{ useUsers.currentUser?.Number }}</p>
-        <p>{{ useUsers.currentUser?.Login }}</p>
+        <v-list>
+            <v-list-item title="Login">{{ useUsers.currentUser?.Login }}</v-list-item>
+            <v-list-item title="Name">{{ useUsers.currentUser?.Name }}</v-list-item>
+            <v-list-item title="Number">{{ useUsers.currentUser?.Number }}</v-list-item>
+            <v-list-item title="Email">{{ useUsers.currentUser?.Email }}</v-list-item>
+            <!-- <v-list-item prepend-icon="mdi-phone" :title="useUsers.currentUser?.Login"></v-list-item> -->
+            <!-- <v-divider></v-divider> -->
+            <!-- <v-list-item prepend-icon="mdi-email" :title="useUsers.currentUser?.Name"></v-list-item> -->
+            <!-- <v-divider></v-divider> -->
+            <!-- <v-list-item prepend-icon="mdi-phone" :title="useUsers.currentUser?.Login"></v-list-item> -->
+            <!-- <v-divider></v-divider> -->
+            <!-- <v-list-item prepend-icon="mdi-phone" :title="useUsers.currentUser?.Login"></v-list-item> -->
+        </v-list>
     </v-container>
 </template>
 

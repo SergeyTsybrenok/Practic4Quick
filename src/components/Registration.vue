@@ -1,13 +1,14 @@
 <template>
   <v-container>
     <h2>Registration</h2>
-    <v-form @submit.prevent>
+    <v-form @submit.prevent name="registration-form">
       <v-col cols="8" lg="12">
         <v-text-field
           name="login"
           :counter="50"
           label="Login"
           v-model="user.Login"
+          autocomplete="username"
           required
         />
         <v-text-field
@@ -16,6 +17,7 @@
           :rules="firstNameRules"
           label="User name"
           v-model="user.Name"
+          autocomplete="name"
           required
         />
         <v-text-field
@@ -23,6 +25,7 @@
           :counter="12"
           label="Phone"
           v-model="user.Number"
+          autocomplete="tel"
           required
         />
         <v-text-field
@@ -32,6 +35,7 @@
           type="mail"
           label="mail"
           :rules="mailRules"
+          autocomplete="email"
           required
         />
         <v-text-field
@@ -40,6 +44,7 @@
           label="password"
           v-model="user.PasswordHash"
           :rules="passwordRules"
+          autocomplete="new-password"
           required
         />
         <!-- TODO password hash to password -->
