@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { User } from "@/types/user";
 import type { ProductLink } from "@/types/productLink";
+import ProductCard from "@/components/ProductCard.vue";
 
 //TODO create abstract class with id and etc.
 export const useAppStore = defineStore("app", () => {
@@ -39,6 +40,10 @@ export const useAppStore = defineStore("app", () => {
         productId: productId,
         count: 1,
       };
+      //TODO
+      // if (currentUser.value?.Card === undefined) {
+      //   currentUser.value?.Card = [] as ProductLink[];
+      // }
       currentUser.value?.Card?.push(newProduct);
       console.log("Product in card!");
       return true;
