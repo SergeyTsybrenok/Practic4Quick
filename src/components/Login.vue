@@ -1,6 +1,5 @@
 <template>
   <h2>Login</h2>
-  <Popup :popup="popup" />
 
   <v-text-field
     name="login"
@@ -25,7 +24,6 @@
 import { usePopup } from '@/composables/usePopup';
 import { useAppStore } from '@/stores/app';
 import { reactive } from 'vue';
-import Popup from './Popup.vue';
 import { useRouter } from 'vue-router';
 
 const useUsers = useAppStore();

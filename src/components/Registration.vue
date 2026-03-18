@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <Popup :popup="popup" />
     <h2>Registration</h2>
     <v-form @submit.prevent>
       <v-col cols="8" lg="12">
@@ -61,7 +60,6 @@
 import { usePopup } from "@/composables/usePopup";
 import type { User } from "@/types/user";
 import { reactive, ref } from "vue";
-import Popup from "./Popup.vue";
 import { useAppStore } from "@/stores/app"; //TODO rename to useUserStore
 import router from "@/router";
 

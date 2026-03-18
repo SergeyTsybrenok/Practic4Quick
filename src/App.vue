@@ -9,6 +9,7 @@
           <v-btn v-else :to="{ name: 'account'}">Account ({{ useUsers.currentUser?.Login }})</v-btn>
           <v-btn :to="{ name: 'adminka'}" text="Adminka"></v-btn>
         </v-app-bar>
+        <Popup :popup="popup"/>
       <router-view />
     </v-main>
     <Footer/>
@@ -17,9 +18,9 @@
 
 <script lang="ts" setup>
 import Footer from './components/Footer.vue';
+import { usePopup } from './composables/usePopup';
 import { useAppStore } from './stores/app';
 
 const useUsers = useAppStore();
-
-  //
+const popup = usePopup();
 </script>

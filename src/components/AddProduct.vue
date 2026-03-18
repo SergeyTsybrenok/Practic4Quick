@@ -1,8 +1,6 @@
 <template>
 <v-container>
 
-  <Popup :popup="popup"/>
-  
   <v-form @submit.prevent>
   <v-row>
     <v-col cols="12" md="6">
@@ -62,7 +60,6 @@ import { computed, reactive, ref } from 'vue';
 import type { Product } from '@/types/product';
 import { useProductStore } from '@/stores/useProductStore';
 import { usePopup } from '@/composables/usePopup';
-import Popup from './Popup.vue';
 
 const popup = usePopup();
 
