@@ -2,9 +2,11 @@
     <v-container>
         <h2>Account {{ useUsers.currentUser?.Login }}</h2>
         
-        <v-btn v-show="!useUsers.checkCurrentUser()" :to="{ name: 'login' }" text="sign in"></v-btn>
-        <v-btn v-show="!useUsers.checkCurrentUser()" :to="{ name: 'registration' }" text="sign up"></v-btn>
+        <v-btn v-show="!useUsers.checkCurrentUser()" :to="{ name: 'login' }" text="Sign in"></v-btn>
+        <v-btn v-show="!useUsers.checkCurrentUser()" :to="{ name: 'registration' }" text="Sign up"></v-btn>
 
+        <v-btn v-show="useUsers.checkCurrentUser()" @click="pushToProfile()">Profile</v-btn>
+        <v-btn v-show="useUsers.checkCurrentUser()" @click="pushToCart()">Cart</v-btn>
         <v-btn v-show="useUsers.checkCurrentUser()" @click="signOut()">Sign out</v-btn>
         <router-view />
     </v-container>
@@ -25,18 +27,24 @@ function signOut() {
     });
 }
 
-onMounted(() => {
-    if (useUsers.checkCurrentUser()) {
-        router.push({
-            name: "user-account",
-            params: { login: useUsers.currentUser?.Login },
-        })
-    }
-    else {
-        router.push({
-            name: "login",
-        })
-    }
-})
+// TODO add check onMount
 
+function pushToCart() {
+    if (!useUsers.checkCurrentUser()) return;
+
+    router.push({
+        name: "user-cart",
+        params: { login: useUsers.currentUser?.Login }
+    })
+}
+
+//TODO remove dublication
+function pushToProfile() {
+    if (!useUsers.checkCurrentUser()) return;
+
+    router.push({
+        name: "user-account",
+        params: { login: useUsers.currentUser?.Login }
+    })
+}
 </script>

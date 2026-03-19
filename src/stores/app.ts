@@ -41,9 +41,9 @@ export const useAppStore = defineStore("app", () => {
         count: 1,
       };
       //TODO
-      // if (currentUser.value?.Card === undefined) {
-      //   currentUser.value?.Card = [] as ProductLink[];
-      // }
+      if (currentUser.value?.Card === undefined) {
+        currentUser.value!.Card = [] as ProductLink[];
+      }
       currentUser.value?.Card?.push(newProduct);
       console.log("Product in card!");
       return true;

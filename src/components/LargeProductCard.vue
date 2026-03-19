@@ -54,7 +54,7 @@
               v-else-if="useUsers.checkCurrentUser() &&
                 useUsers.haveProductInCard(product.id as number)
               "
-              @click="pushToCard()"
+              @click="useUsers.tryRemoveProductFromCard(product.id as number)"
               color="secondary"
               block
               size="large"
