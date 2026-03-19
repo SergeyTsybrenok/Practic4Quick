@@ -25,6 +25,7 @@ const userProducts = computed(() => {
     return getUserCardProducts();
 });
 
+// TODO rewrite! O(n2)
 function getUserCardProducts() {
     let userProducts: Product[] = [];
 
