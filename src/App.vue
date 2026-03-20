@@ -20,6 +20,7 @@
 import Footer from './components/Footer.vue';
 import { usePopup } from './composables/usePopup';
 import { useAppStore } from './stores/app';
+import Popup from "./components/Popup.vue";
 
 const useUsers = useAppStore();
 const popup = usePopup();
