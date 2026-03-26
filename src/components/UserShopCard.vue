@@ -1,9 +1,10 @@
+<!-- TODO remove code duplicate (about ProductCard) -->
 <template>
     <v-container>
         <h1>Cart</h1>
         <v-row>
             <v-col v-for="product in userProducts" md="6" lg="5" xl="3">
-                <ProductCard
+                <ProductCardInCart
                     :product="product"
                 />
             </v-col>
@@ -17,6 +18,7 @@ import { useAppStore } from '@/stores/app';
 import { useProductStore } from '@/stores/useProductStore';
 import type { Product } from '@/types/product';
 import { computed, ref } from 'vue';
+import ProductCardInCart from './ProductCardInCart.vue';
 
 const { products, addProduct, removeProductByIndex } = useProductStore();
 const useUsers = useAppStore();
