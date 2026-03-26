@@ -12,6 +12,7 @@ import Login from '@/components/Login.vue'
 import LargeProductCard from '@/components/LargeProductCard.vue'
 import UserAccount from '@/components/UserAccount.vue'
 import UserShopCard from '@/components/UserShopCard.vue'
+import JsonProject from '@/components/JsonProject.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,6 +62,7 @@ const router = createRouter({
         {path: 'addProduct', component: AddProduct, name: 'addProduct'},
         {path: 'editProducts', component: EditProducts, name: 'editProducts'},
         {path: 'users', component: Users, name: 'users'},
+        {path: 'json', component: JsonProject, name: 'json'},
       ]
     },
     {
