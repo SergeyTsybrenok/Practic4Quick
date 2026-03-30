@@ -10,7 +10,7 @@
   <v-card-title primary-title>
     <div>
       <h3>{{ product.name }}</h3>
-      <div>${{ product.price }}</div>
+      <div>{{ currencyFormatter.format(product.price) }}</div>
     </div>
   </v-card-title>
 
@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+import { currencyFormatter } from '@/tools/formatters';
 import type { Product } from '@/types/product';
 import { useRouter } from 'vue-router';
 

@@ -5,11 +5,11 @@
     <v-card-title primary-title>
       <div>
         <h3>{{ product.name }}</h3>
-        <div color="bg-red">${{ product.price }}</div>
+        <div color="bg-red">{{ currencyFormatter.format(product.price) }}</div>
         <div>id {{ product.id }}</div>
       </div>
       <div v-if="productLink.count > 1">
-        Summary cost: ${{ productLink.count * product.price }}
+        Summary cost: {{currencyFormatter.format( productLink.count * product.price )}}
       </div>
     </v-card-title>
 
@@ -45,6 +45,7 @@
 <script setup lang="ts">
 import { usePopup } from "@/composables/usePopup";
 import { useAppStore } from "@/stores/app";
+import { currencyFormatter } from "@/tools/formatters";
 import type { Product } from "@/types/product";
 import type { ProductLink } from "@/types/productLink";
 import { useRouter } from "vue-router";

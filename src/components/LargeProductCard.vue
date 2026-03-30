@@ -25,7 +25,9 @@
           </v-card-title>
 
           <v-card-text>
-            <div class="text-h3 text-primary mb-2">${{ product.price }}</div>
+            <div class="text-h3 text-primary mb-2">
+              {{ currencyFormatter.format(product.price) }}
+            </div>
 
             <v-divider class="my-4"></v-divider>
 
@@ -47,7 +49,8 @@
               Add to cart
             </v-btn>
             <v-btn
-              v-else-if="useUsers.checkCurrentUser() &&
+              v-else-if="
+                useUsers.checkCurrentUser() &&
                 useUsers.haveProductInCard(product.id as number)
               "
               @click="useUsers.tryRemoveProductFromCard(product.id as number)"
@@ -89,6 +92,7 @@ import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useProductStore } from "@/stores/useProductStore";
 import { useAppStore } from "@/stores/app";
+import { currencyFormatter } from "@/tools/formatters";
 
 const route = useRoute();
 const router = useRouter();

@@ -12,7 +12,7 @@
     </v-row>
 
     <div v-if="useUsers.currentUser?.Card?.length > 0">
-      <h3>Total price: ${{ totalPrice }}</h3>
+      <h3>Total price: {{currencyFormatter.format(totalPrice)}}</h3>
       <v-btn @click="useUsers.order()" color="green" variant="elevated"
         >Order</v-btn
       >
@@ -46,6 +46,7 @@ import type { Product } from "@/types/product";
 import { computed, ref } from "vue";
 import ProductCardInCart from "./ProductCardInCart.vue";
 import type { ProductLink } from "@/types/productLink";
+import { currencyFormatter } from "@/tools/formatters";
 
 const { products, addProduct, removeProductByIndex } = useProductStore();
 const useUsers = useAppStore();
