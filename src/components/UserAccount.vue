@@ -1,32 +1,26 @@
 <template>
-    <v-container>
-        <v-list>
-            <v-list-item title="Login">{{ useUsers.currentUser?.Login }}</v-list-item>
-            <v-list-item title="Name">{{ useUsers.currentUser?.Name }}</v-list-item>
-            <v-list-item title="Number">{{ useUsers.currentUser?.Number }}</v-list-item>
-            <v-list-item title="Email">{{ useUsers.currentUser?.Email }}</v-list-item>
-            <!-- <v-list-item prepend-icon="mdi-phone" :title="useUsers.currentUser?.Login"></v-list-item> -->
-            <!-- <v-divider></v-divider> -->
-            <!-- <v-list-item prepend-icon="mdi-email" :title="useUsers.currentUser?.Name"></v-list-item> -->
-            <!-- <v-divider></v-divider> -->
-            <!-- <v-list-item prepend-icon="mdi-phone" :title="useUsers.currentUser?.Login"></v-list-item> -->
-            <!-- <v-divider></v-divider> -->
-            <!-- <v-list-item prepend-icon="mdi-phone" :title="useUsers.currentUser?.Login"></v-list-item> -->
-        </v-list>
-    </v-container>
+  <v-container>
+    <v-list>
+      <v-list-item title="Login">{{ useUsers.currentUser?.Login }}</v-list-item>
+      <v-list-item title="Name">{{ useUsers.currentUser?.Name }}</v-list-item>
+      <v-list-item title="Number">{{
+        useUsers.currentUser?.Number
+      }}</v-list-item>
+      <v-list-item title="Email">{{ useUsers.currentUser?.Email }}</v-list-item>
+    </v-list>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
-import { useAppStore } from '@/stores/app';
+import router from "@/router";
+import { useAppStore } from "@/stores/app";
 
-
-const useUsers = useAppStore()
+const useUsers = useAppStore();
 
 // It's global lol (call every time when change destination even if it's not this module)
 router.beforeEach((to, from) => {
-    if (to.name === "user-account" && !useUsers.checkCurrentUser()) {
-        return false
-    }
-})
+  if (to.name === "user-account" && !useUsers.checkCurrentUser()) {
+    return false;
+  }
+});
 </script>

@@ -12,7 +12,7 @@
     </v-row>
 
     <div v-if="useUsers.currentUser?.Card?.length > 0">
-      <h3>Total price: {{currencyFormatter.format(totalPrice)}}</h3>
+      <h3>Total price: {{ currencyFormatter.format(totalPrice) }}</h3>
       <v-btn @click="useUsers.order()" color="green" variant="elevated"
         >Order</v-btn
       >

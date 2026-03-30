@@ -3,12 +3,12 @@
     <v-row>
       <h2 class="text-center"></h2>
 
-      <v-col  md="4">
+      <v-col md="4">
         <h2>Json data</h2>
         <div>
           Use default.json in project directory to load default parameters
         </div>
-        <br>
+        <br />
         <span>Or</span>
 
         <div>
@@ -18,7 +18,9 @@
             accept=".json"
             v-model="Files"
           ></v-file-input>
-          <v-btn :disabled="!Files" @click="loadData()" color="info">Load</v-btn>
+          <v-btn :disabled="!Files" @click="loadData()" color="info"
+            >Load</v-btn
+          >
         </div>
         <v-btn @click="ExampleDownload()">Download current data</v-btn>
       </v-col>

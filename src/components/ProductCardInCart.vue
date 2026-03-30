@@ -9,7 +9,8 @@
         <div>id {{ product.id }}</div>
       </div>
       <div v-if="productLink.count > 1">
-        Summary cost: {{currencyFormatter.format( productLink.count * product.price )}}
+        Summary cost:
+        {{ currencyFormatter.format(productLink.count * product.price) }}
       </div>
     </v-card-title>
 
@@ -35,7 +36,12 @@
       >
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
-      <v-btn v-else flat icon @click="useUsers.tryRemoveFromFavorite(product.id as number)">
+      <v-btn
+        v-else
+        flat
+        icon
+        @click="useUsers.tryRemoveFromFavorite(product.id as number)"
+      >
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
     </div>

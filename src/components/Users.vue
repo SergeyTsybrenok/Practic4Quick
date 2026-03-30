@@ -2,11 +2,7 @@
   <h2>Users</h2>
   <v-data-table :headers="headers" :items="useUsers.users">
     <template v-slot:item.actions="{ item }">
-      <v-btn
-        variant="text"
-        icon
-        @click="edit(item)"
-      >
+      <v-btn variant="text" icon @click="edit(item)">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
 
@@ -19,19 +15,16 @@
   <v-dialog v-model="dialog" max-width="500">
     <v-card>
       <v-card-title>Modify User</v-card-title>
-      
+
       <v-card-text>
-        <v-text-field
-          v-model="editedUser.name"
-          label="Name"
-        ></v-text-field>
-        
+        <v-text-field v-model="editedUser.name" label="Name"></v-text-field>
+
         <v-text-field
           v-model="editedUser.phone"
           label="Phone"
           type="number"
         ></v-text-field>
-        
+
         <v-text-field
           v-model="editedUser.email"
           label="Email"
@@ -41,7 +34,9 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="error" variant="text" @click="dialog = false">Cancel</v-btn>
+        <v-btn color="error" variant="text" @click="dialog = false"
+          >Cancel</v-btn
+        >
         <v-btn color="success" variant="text" @click="save">Save</v-btn>
       </v-card-actions>
     </v-card>
@@ -75,7 +70,7 @@ const editedUser = ref({
   name: "",
   login: "",
   phone: "",
-  email: ""
+  email: "",
 });
 
 const selectedId = ref<number | null>(null);
@@ -87,7 +82,7 @@ function edit(item: User) {
     name: item.Name,
     login: item.Login,
     phone: item.Number.toString(),
-    email: item.Email
+    email: item.Email,
   };
   dialog.value = true;
 }
@@ -100,17 +95,17 @@ function save() {
       Login: editedUser.value.name,
       Number: parseInt(editedUser.value.phone) || 0,
       Email: editedUser.value.email,
-      PasswordHash: "", 
+      PasswordHash: "",
       Admin: false,
       Likes: [],
-      Card: []
+      Card: [],
     });
   }
   dialog.value = false;
 }
 
 function remove(id: number) {
-  if (confirm('Are you sure you want to delete this user?')) {
+  if (confirm("Are you sure you want to delete this user?")) {
     useUsers.deleteUserById(id);
   }
 }

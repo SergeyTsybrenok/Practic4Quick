@@ -1,40 +1,34 @@
 <template>
+  <v-card class="mx-auto" max-width="344" min-width="285">
+    <v-img height="200px" :src="product.imageUrl" cover />
 
-<v-card class="mx-auto" max-width="344" min-width="285">
-  <v-img
-    height="200px"
-    :src="product.imageUrl"
-    cover
-  />
+    <v-card-title primary-title>
+      <div>
+        <h3>{{ product.name }}</h3>
+        <div>{{ currencyFormatter.format(product.price) }}</div>
+      </div>
+    </v-card-title>
 
-  <v-card-title primary-title>
-    <div>
-      <h3>{{ product.name }}</h3>
-      <div>{{ currencyFormatter.format(product.price) }}</div>
-    </div>
-  </v-card-title>
-
-  <v-card-actions>
-    <v-btn @click="goToProductDetailed" color="primary">See more</v-btn>
-  </v-card-actions>
-
-</v-card>
+    <v-card-actions>
+      <v-btn @click="goToProductDetailed" color="primary">See more</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script setup lang="ts">
-import { currencyFormatter } from '@/tools/formatters';
-import type { Product } from '@/types/product';
-import { useRouter } from 'vue-router';
+import { currencyFormatter } from "@/tools/formatters";
+import type { Product } from "@/types/product";
+import { useRouter } from "vue-router";
 
 const props = defineProps<{
-    product: Product;
+  product: Product;
 }>();
 
 const router = useRouter();
 const goToProductDetailed = () => {
   router.push({
     name: "product-detail",
-    params: { id: props.product.id }
-  })
-}
+    params: { id: props.product.id },
+  });
+};
 </script>

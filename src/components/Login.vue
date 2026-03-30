@@ -18,12 +18,9 @@
       autocomplete="current-password"
       required
     />
-    <v-btn
-      @click="tryLogin"
-      type="submit"
-      size="large"
-      color="success"
-    >Sign in</v-btn>
+    <v-btn @click="tryLogin" type="submit" size="large" color="success"
+      >Sign in</v-btn
+    >
   </v-form>
 </template>
 
