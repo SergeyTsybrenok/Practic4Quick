@@ -11,7 +11,6 @@
     <div>
       <h3>{{ product.name }}</h3>
       <div>${{ product.price }}</div>
-      <div>id {{ product.id }}</div>
     </div>
   </v-card-title>
 

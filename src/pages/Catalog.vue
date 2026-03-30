@@ -17,12 +17,12 @@ import { useProductStore } from '@/stores/useProductStore';
 
 const { products, addProduct, removeProductByIndex } = useProductStore();
 
-addProduct({
-    id:1,
-    name:"hello",
-    description:"hello",
-    price:123,
-    imageUrl:"https://i.pinimg.com/736x/a4/01/49/a401498abbaa75ae5ca121075f23e9f1.jpg",
-})
+// addProduct({
+//     id:1,
+//     name:"hello",
+//     description:"hello",
+//     price:123,
+//     imageUrl:"https://i.pinimg.com/736x/a4/01/49/a401498abbaa75ae5ca121075f23e9f1.jpg",
+// })
 
 </script>

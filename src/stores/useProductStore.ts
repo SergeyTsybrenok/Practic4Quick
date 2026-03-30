@@ -7,12 +7,10 @@ export const useProductStore = defineStore('product', () => { //PINIA
   const products = ref<Product[]>([]);
   const maxId = ref(0);
 
-  // function getMaxIdProduct(): number {
-  //   const maxId = Math.max(...products.value.map(p => p.id as number), 0) //TODO write what is map here
-  //   console.log(maxId);
-    
-  //   return maxId;
-  // }
+  function loadStoreData(data:any) {
+    if (data.products) products.value = data.products;
+    if (data.maxId) maxId.value = data.maxId;
+  }
 
   function addProduct(newProduct: Product) {
     newProduct.id = maxId.value;
@@ -35,6 +33,8 @@ export const useProductStore = defineStore('product', () => { //PINIA
 
   return {
     products,
+    maxId,
+    loadStoreData,
     addProduct,
     removeProductByIndex,
     getProductByIndex

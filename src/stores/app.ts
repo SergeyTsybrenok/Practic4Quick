@@ -3,12 +3,23 @@ import { ref } from "vue";
 import type { User } from "@/types/user";
 import type { ProductLink } from "@/types/productLink";
 import ProductCard from "@/components/ProductCard.vue";
+import type { HistoryOrder } from "@/types/history";
 
 //TODO create abstract class with id and etc.
 export const useAppStore = defineStore("app", () => {
   const users = ref<User[]>([]);
+  // TODO don't forget to save and load from JSON
   const maxId = ref<number>(0);
   let currentUser = ref<User>();
+
+  function loadStoreData(data:any) {
+    if (data.users) users.value = data.users;
+    if (data.maxId) maxId.value = data.maxId;
+    //TODO throw error parser
+
+    // I'm not sure we need to load currentUser I think it's can make some error in the future
+    // if (data.currentUser) currentUser.value = data.currentUser;
+  }
 
   function checkLoginUniq(login: string): boolean {
     return users.value.some((user) => user.Login === login); //TODO remove double check
@@ -26,7 +37,7 @@ export const useAppStore = defineStore("app", () => {
 
   function tryAddProductToCard(productId: number) {
     console.log(currentUser.value?.Card);
-    
+
     if (!checkCurrentUser()) return false;
 
     if (
@@ -49,7 +60,7 @@ export const useAppStore = defineStore("app", () => {
       return true;
     }
   }
-  
+
   //TODO use indexOF
   function tryRemoveProductFromCard(productId: number) {
     if (!checkCurrentUser()) return false;
@@ -62,7 +73,38 @@ export const useAppStore = defineStore("app", () => {
   }
 
   function haveProductInCard(productId: number) {
-    return currentUser.value?.Card?.some((ProductLink) => ProductLink.productId === productId);
+    return currentUser.value?.Card?.some(
+      (ProductLink) => ProductLink.productId === productId,
+    );
+  }
+
+  function order() {
+    if (!checkCurrentUser) return;
+    
+    const newHistoryOrder: HistoryOrder = {
+      productLinks: currentUser.value?.Card as ProductLink[],
+      orderDate: new Date()
+    }
+    currentUser.value?.History?.push(newHistoryOrder);
+
+    currentUser.value?.Card?.splice(0); //Delete all product from cart
+  }
+
+  function inFavorite(productId:number) {
+    return currentUser.value?.Likes?.some((like) => like === productId);
+  }
+
+  function tryAddToFavorite(productId:number) {
+    if (!inFavorite(productId)) {
+      currentUser.value?.Likes?.push(productId);
+    }
+  }
+
+  function tryRemoveFromFavorite(productId:number) {
+    if (inFavorite(productId)) {
+      const index: number = currentUser.value?.Likes?.findIndex((likeId) => productId === likeId) as number;
+      currentUser.value?.Likes?.splice(index, 1);
+    }
   }
 
   function checkCurrentUser(): boolean {
@@ -115,6 +157,8 @@ export const useAppStore = defineStore("app", () => {
   return {
     users,
     currentUser,
+    maxId,
+    loadStoreData,
     addUser,
     deleteUserById,
     getUserById,
@@ -125,6 +169,10 @@ export const useAppStore = defineStore("app", () => {
     tryAddProductToCard,
     tryRemoveProductFromCard,
     haveProductInCard,
+    order,
+    tryAddToFavorite,
+    tryRemoveFromFavorite,
+    inFavorite
   };
   // TODO incapsulate currentUser
 });

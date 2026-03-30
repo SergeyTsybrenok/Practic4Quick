@@ -24,12 +24,8 @@
             {{ product.name }}
           </v-card-title>
 
-          <v-card-subtitle class="text-h6">
-            ID: {{ product.id }}
-          </v-card-subtitle>
-
           <v-card-text>
-            <div class="text-h5 text-primary mb-4">${{ product.price }}</div>
+            <div class="text-h3 text-primary mb-2">${{ product.price }}</div>
 
             <v-divider class="my-4"></v-divider>
 
