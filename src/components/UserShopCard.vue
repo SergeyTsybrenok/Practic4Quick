@@ -7,6 +7,7 @@
         <ProductCard
           :product="product"
           :product-link="getProductLink(product) as ProductLink"
+          :in-cart="true"
         ></ProductCard>
       </v-col>
     </v-row>
