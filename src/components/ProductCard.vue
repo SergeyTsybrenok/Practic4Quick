@@ -48,6 +48,7 @@
           </v-btn>
           <v-btn
             v-else
+            @click.stop
             :to="{ name: 'login' }"
             color="secondary"
             block
