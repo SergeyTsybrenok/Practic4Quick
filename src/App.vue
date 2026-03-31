@@ -21,7 +21,22 @@ import Footer from './components/Footer.vue';
 import { usePopup } from './composables/usePopup';
 import { useAppStore } from './stores/app';
 import Popup from "./components/Popup.vue";
+import { onMounted } from 'vue';
+import { useProductStore } from './stores/useProductStore';
 
 const useUsers = useAppStore();
+const products = useProductStore();
 const popup = usePopup();
+
+onMounted(async () => {
+  const response = await fetch("/default.json");
+  if (!response.ok) throw new Error('default.json not found');
+
+  const data = await response.json();
+  
+
+  useUsers.loadStoreData(data.users);
+  products.loadStoreData(data.products);
+  popup.showMessage("Loaded " + data.products.products.length + " products and " + data.users.users.length + " users from default.json", "success")
+})
 </script>

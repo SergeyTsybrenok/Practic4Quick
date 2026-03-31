@@ -81,7 +81,15 @@ function loadData() {
     useUsers.loadStoreData(jsonFiles.value.users);
     products.loadStoreData(jsonFiles.value.products);
 
-    popup.showMessage("Data loaded into stores!", "success");
+    popup.showMessage(
+      "Loaded " +
+      jsonFiles.value.products.products.length +
+      " products and " +
+      jsonFiles.value.users.users.length +
+      " users from " +
+      Files.value.name,
+      "success",
+    );
   } catch (error) {
     console.log("Error updating stores:", error);
     popup.showMessage("Failed load data", "error");

@@ -13,6 +13,9 @@ export const useAppStore = defineStore("app", () => {
   let currentUser = ref<User>();
 
   function loadStoreData(data:any) {
+    console.log("Inner: " + data.users);
+    
+
     if (data.users) users.value = data.users;
     if (data.maxId) maxId.value = data.maxId;
     //TODO throw error parser
