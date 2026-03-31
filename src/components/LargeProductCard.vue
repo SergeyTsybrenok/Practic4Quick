@@ -36,6 +36,8 @@
           </v-card-text>
 
           <v-card-actions>
+            <Favorite :product="product" :use-users="useUsers" />
+
             <v-btn
               v-if="
                 useUsers.checkCurrentUser() &&
@@ -93,6 +95,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useProductStore } from "@/stores/useProductStore";
 import { useAppStore } from "@/stores/app";
 import { currencyFormatter } from "@/tools/formatters";
+import Favorite from "./sub-components/Favorite.vue";
 
 const route = useRoute();
 const router = useRouter();

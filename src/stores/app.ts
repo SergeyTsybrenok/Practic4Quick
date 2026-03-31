@@ -93,12 +93,15 @@ export const useAppStore = defineStore("app", () => {
     currentUser.value?.Card?.splice(0); //Delete all product from cart
   }
 
-  function inFavorite(productId:number) {
-    return currentUser.value?.Likes?.some((like) => like === productId);
+  function inFavorite(productId:number): boolean {
+    return currentUser.value?.Likes?.some((like) => like === productId) as boolean;
   }
 
   function tryAddToFavorite(productId:number) {
     if (!inFavorite(productId)) {
+      if (!currentUser.value?.Likes && currentUser.value) {
+        currentUser.value.Likes = [] as number[];
+      }
       currentUser.value?.Likes?.push(productId);
     }
   }

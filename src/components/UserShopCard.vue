@@ -4,10 +4,10 @@
     <h1>Cart</h1>
     <v-row>
       <v-col v-for="product in userProducts" md="6" lg="5" xl="3">
-        <ProductCardInCart
+        <ProductCard
           :product="product"
           :product-link="getProductLink(product) as ProductLink"
-        ></ProductCardInCart>
+        ></ProductCard>
       </v-col>
     </v-row>
 
@@ -47,6 +47,7 @@ import { computed, ref } from "vue";
 import ProductCardInCart from "./ProductCardInCart.vue";
 import type { ProductLink } from "@/types/productLink";
 import { currencyFormatter } from "@/tools/formatters";
+import ProductCard from "./ProductCard.vue";
 
 const { products, addProduct, removeProductByIndex } = useProductStore();
 const useUsers = useAppStore();
