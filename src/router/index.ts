@@ -13,6 +13,7 @@ import LargeProductCard from '@/components/LargeProductCard.vue'
 import UserAccount from '@/components/UserAccount.vue'
 import UserShopCard from '@/components/UserShopCard.vue'
 import JsonProject from '@/components/JsonProject.vue'
+import { useAppStore } from '@/stores/app'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,12 +47,37 @@ const router = createRouter({
     {
       path: '/account',
       component: Account,
-      name: "account",
+      beforeEnter: (to, from, next) => {
+        const useUsers = useAppStore();
+        const isLoggedIn = useUsers.checkCurrentUser();
+
+        // Other -> login without account (YES)
+        // Other -> login with User (NO)
+
+        if (to.name === 'login' && !isLoggedIn) {
+          next();
+        }
+        else if (to.name === 'login' && isLoggedIn) {
+          // const lastPage: string = useUsers.getLastPage();
+
+          // if (lastPage) {
+            
+          // }
+          next({
+            name: 'user-cart',
+            params: {login: useUsers.currentUser?.Login}
+          });
+        }
+        else {
+          console.warn("TO: " + to.name?.toString() + "\nFrom: " + from.name?.toString());
+          next()
+        }
+      },
       children: [
         {path: 'createUser', component: Registration, name: 'registration'},
         {path: 'login', component: Login, name: 'login'},
-        {path: '/user/:login', component: UserAccount, name: 'user-account'},
-        {path: '/user/:login/cart', component: UserShopCard, name: 'user-cart'},
+        {path: '/user/:login', component: UserAccount, name: 'user-account', meta: { requiresAuth: true }},
+        {path: '/user/:login/cart', component: UserShopCard, name: 'user-cart', meta: { requiresAuth: true }},
       ]
     },
     {

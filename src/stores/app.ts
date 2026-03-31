@@ -8,14 +8,21 @@ import type { HistoryOrder } from "@/types/history";
 //TODO create abstract class with id and etc.
 export const useAppStore = defineStore("app", () => {
   const users = ref<User[]>([]);
-  // TODO don't forget to save and load from JSON
   const maxId = ref<number>(0);
+  const lastVisitedName = ref<string>('user-account');
+
   let currentUser = ref<User>();
 
-  function loadStoreData(data:any) {
-    console.log("Inner: " + data.users);
-    
+  function setLastPage(name: string) {
+    lastVisitedName.value = name;
+  }
 
+  // Я не хочу прокидывать саму переменную в export, чтобы она не сохранялась в json файл
+  function getLastPage(): string {
+    return lastVisitedName.value
+  }
+
+  function loadStoreData(data:any) {
     if (data.users) users.value = data.users;
     if (data.maxId) maxId.value = data.maxId;
     //TODO throw error parser
@@ -178,7 +185,9 @@ export const useAppStore = defineStore("app", () => {
     order,
     tryAddToFavorite,
     tryRemoveFromFavorite,
-    inFavorite
+    inFavorite,
+    setLastPage,
+    getLastPage,
   };
   // TODO incapsulate currentUser
 });

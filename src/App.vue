@@ -7,10 +7,10 @@
         <v-btn :to="{ name: 'catalog' }" text="Catalog"></v-btn>
         <v-btn
           v-if="!useUsers.checkCurrentUser()"
-          :to="{ name: 'account' }"
+          :to="{ name: 'login' }"
           text="Account"
         ></v-btn>
-        <v-btn v-else :to="{ name: 'account' }"
+        <v-btn v-else :to="{ name: 'login' }"
           >Account ({{ useUsers.currentUser?.Login }})</v-btn
         >
         <v-btn :to="{ name: 'adminka' }" text="Adminka"></v-btn>

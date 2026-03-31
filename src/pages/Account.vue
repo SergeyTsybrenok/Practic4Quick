@@ -40,19 +40,6 @@ function signOut() {
   });
 }
 
-onMounted(() => {
-  if (useUsers.checkCurrentUser()) {
-    router.push({
-      name: "user-account",
-      params: { login: useUsers.currentUser?.Login },
-    });
-  } else {
-    router.push({
-      name: "login",
-    });
-  }
-});
-
 function pushToCart() {
   if (!useUsers.checkCurrentUser()) return;
 
