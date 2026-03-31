@@ -1,28 +1,34 @@
 <template>
   <v-app>
     <v-main>
-        <v-app-bar title="CarStation">
-          <v-btn :to="{ name: 'home'}" text="Home"></v-btn>
-          <v-btn :to="{ name: 'about'}" text="About"></v-btn>
-          <v-btn :to="{ name: 'catalog'}" text="Catalog"></v-btn>
-          <v-btn v-if="!useUsers.checkCurrentUser()" :to="{ name: 'account'}" text="Account"></v-btn>
-          <v-btn v-else :to="{ name: 'account'}">Account ({{ useUsers.currentUser?.Login }})</v-btn>
-          <v-btn :to="{ name: 'adminka'}" text="Adminka"></v-btn>
-        </v-app-bar>
-        <Popup :popup="popup"/>
+      <v-app-bar title="CarStation">
+        <v-btn :to="{ name: 'home' }" text="Home"></v-btn>
+        <v-btn :to="{ name: 'about' }" text="About"></v-btn>
+        <v-btn :to="{ name: 'catalog' }" text="Catalog"></v-btn>
+        <v-btn
+          v-if="!useUsers.checkCurrentUser()"
+          :to="{ name: 'account' }"
+          text="Account"
+        ></v-btn>
+        <v-btn v-else :to="{ name: 'account' }"
+          >Account ({{ useUsers.currentUser?.Login }})</v-btn
+        >
+        <v-btn :to="{ name: 'adminka' }" text="Adminka"></v-btn>
+      </v-app-bar>
+      <Popup :popup="popup" />
       <router-view />
     </v-main>
-    <Footer/>
+    <Footer />
   </v-app>
 </template>
 
 <script lang="ts" setup>
-import Footer from './components/Footer.vue';
-import { usePopup } from './composables/usePopup';
-import { useAppStore } from './stores/app';
+import Footer from "./components/Footer.vue";
+import { usePopup } from "./composables/usePopup";
+import { useAppStore } from "./stores/app";
 import Popup from "./components/Popup.vue";
-import { onMounted } from 'vue';
-import { useProductStore } from './stores/useProductStore';
+import { onMounted } from "vue";
+import { useProductStore } from "./stores/useProductStore";
 
 const useUsers = useAppStore();
 const products = useProductStore();
@@ -30,13 +36,19 @@ const popup = usePopup();
 
 onMounted(async () => {
   const response = await fetch("/default.json");
-  if (!response.ok) throw new Error('default.json not found');
+  if (!response.ok) throw new Error("default.json not found");
 
   const data = await response.json();
-  
 
   useUsers.loadStoreData(data.users);
   products.loadStoreData(data.products);
-  popup.showMessage("Loaded " + data.products.products.length + " products and " + data.users.users.length + " users from default.json", "success")
-})
+  popup.showMessage(
+    "Loaded " +
+      data.products.products.length +
+      " products and " +
+      data.users.users.length +
+      " users from default.json",
+    "success",
+  );
+});
 </script>
