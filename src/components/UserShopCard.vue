@@ -14,9 +14,7 @@
 
     <div v-if="useUsers.currentUser?.Card?.length > 0">
       <h3>Total price: {{ currencyFormatter.format(totalPrice) }}</h3>
-      <v-btn @click="useUsers.order()" color="green" variant="elevated"
-        >Order</v-btn
-      >
+      <v-btn @click="order()" color="green" variant="elevated">Order</v-btn>
     </div>
 
     <v-card class="mx-auto" v-else>
@@ -49,9 +47,11 @@ import ProductCardInCart from "./ProductCardInCart.vue";
 import type { ProductLink } from "@/types/productLink";
 import { currencyFormatter } from "@/tools/formatters";
 import ProductCard from "./ProductCard.vue";
+import { usePopup } from "@/composables/usePopup";
 
 const { products, addProduct, removeProductByIndex } = useProductStore();
 const useUsers = useAppStore();
+const popup = usePopup();
 
 const userProducts = computed(() => {
   return getUserCardProducts();
@@ -68,6 +68,14 @@ const totalPrice = computed(() => {
   });
   return totalPrice;
 });
+
+function order() {
+  popup.showMessage(
+    "Thank you for ordering for the amount of " +
+      currencyFormatter.format(totalPrice.value),
+  );
+  useUsers.order();
+}
 
 function getProductLink(product: Product): ProductLink | undefined {
   const cartProducts = useUsers.currentUser?.Card;
