@@ -1,6 +1,4 @@
 <template>
-  <!-- name: "product-detail",
-    params: { id: props.product.id }, -->
   <v-card
     class="mx-auto"
     max-width="344"
@@ -59,7 +57,7 @@
         </div>
         <Favorite :product="product" :use-users="useUsers" />
       </div>
-      <div v-if="props.inCart" class="w-100 mt-1">
+      <div v-if="props.inCart && props.inCart" class="w-100 mt-1">
         <v-number-input
           density="compact"
           label="Count"
@@ -96,11 +94,12 @@ const popup = usePopup();
 const props = withDefaults(
   defineProps<{
     product: Product;
-    productLink: ProductLink;
+    productLink?: ProductLink;
     inCart?: boolean;
   }>(),
   {
     inCart: false,
+    productLink: () => ({ productId: 1, count: 1}) //Fix Error
   },
 );
 

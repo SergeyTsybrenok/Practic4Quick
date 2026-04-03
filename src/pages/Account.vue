@@ -19,6 +19,14 @@
     <v-btn v-show="useUsers.checkCurrentUser()" @click="pushToCart()"
       >Cart</v-btn
     >
+    <v-btn
+      v-show="useUsers.checkCurrentUser()"
+      @click=" router.push({
+        name: 'user-favorite',
+        params: { login: useUsers.currentUser?.Login },
+      })"
+      >Favorite</v-btn
+    >
     <v-btn v-show="useUsers.checkCurrentUser()" @click="signOut()"
       >Sign out</v-btn
     >

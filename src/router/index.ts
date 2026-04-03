@@ -14,6 +14,7 @@ import UserAccount from '@/components/UserAccount.vue'
 import UserShopCard from '@/components/UserShopCard.vue'
 import JsonProject from '@/components/JsonProject.vue'
 import { useAppStore } from '@/stores/app'
+import UserFavorite from '@/components/UserFavorite.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,6 +79,7 @@ const router = createRouter({
         {path: 'login', component: Login, name: 'login'},
         {path: '/user/:login', component: UserAccount, name: 'user-account', meta: { requiresAuth: true }},
         {path: '/user/:login/cart', component: UserShopCard, name: 'user-cart', meta: { requiresAuth: true }},
+        {path: '/user/:login/favorite', component: UserFavorite, name: 'user-favorite', meta: { requiresAuth: true }},
       ]
     },
     {
