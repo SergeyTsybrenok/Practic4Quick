@@ -20,6 +20,12 @@
         <v-text-field v-model="editedUser.name" label="Name"></v-text-field>
 
         <v-text-field
+          v-model="editedUser.login"
+          label="Login"
+          type="text"
+        ></v-text-field>
+
+        <v-text-field
           v-model="editedUser.phone"
           label="Phone"
           type="number"
@@ -30,6 +36,8 @@
           label="Email"
           type="email"
         ></v-text-field>
+
+        <v-switch label="Admin" v-model="editedUser.admin" color="red-darken-4"></v-switch>
       </v-card-text>
 
       <v-card-actions>
@@ -47,12 +55,14 @@
 import { useAppStore } from "@/stores/app";
 import { ref } from "vue";
 import type { User } from "@/types/user";
+import type { ProductLink } from "@/types/productLink";
 
 const dialog = ref(false);
+const currentEdit = ref();
 
 const useUsers = useAppStore();
 
-const headers = [
+const headers = [ 
   { title: "Name", value: "Name" },
   { title: "Login", value: "Login" },
   { title: "Phone", value: "Number" },
@@ -71,11 +81,16 @@ const editedUser = ref({
   login: "",
   phone: "",
   email: "",
+  password: "",
+  admin: false,
+  likes: [] as number[],
+  card: [] as ProductLink[]
 });
 
 const selectedId = ref<number | null>(null);
 
 function edit(item: User) {
+  currentEdit.value = item;
   selectedId.value = item.id || null;
   editedUser.value = {
     id: item.id || null,
@@ -83,6 +98,10 @@ function edit(item: User) {
     login: item.Login,
     phone: item.Number.toString(),
     email: item.Email,
+    password: item.PasswordHash,
+    admin: item.Admin ?? false,
+    likes: item.Likes ?? [],
+    card: item.Card ?? []
   };
   dialog.value = true;
 }
@@ -92,13 +111,13 @@ function save() {
     useUsers.updateUser(selectedId.value, {
       id: selectedId.value,
       Name: editedUser.value.name,
-      Login: editedUser.value.name,
+      Login: editedUser.value.login,
       Number: parseInt(editedUser.value.phone) || 0,
       Email: editedUser.value.email,
-      PasswordHash: "",
-      Admin: false,
-      Likes: [],
-      Card: [],
+      PasswordHash: editedUser.value.password,
+      Admin: editedUser.value.admin,
+      // Likes: [],
+      // Card: [],
     });
   }
   dialog.value = false;
