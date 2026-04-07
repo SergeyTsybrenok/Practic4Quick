@@ -49,6 +49,7 @@
         />
         <!-- TODO password hash to password -->
         <v-btn
+          prepend-icon="mdi-account-plus"
           @click="AddUser"
           rounded="sm"
           type="submit"

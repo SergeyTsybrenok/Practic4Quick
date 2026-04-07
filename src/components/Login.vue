@@ -18,7 +18,12 @@
       autocomplete="current-password"
       required
     />
-    <v-btn @click="tryLogin" type="submit" size="large" color="success"
+    <v-btn
+      prepend-icon="mdi-login"
+      @click="tryLogin"
+      type="submit"
+      size="large"
+      color="success"
       >Sign in</v-btn
     >
   </v-form>

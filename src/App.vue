@@ -2,18 +2,35 @@
   <v-app>
     <v-main>
       <v-app-bar title="CarStation">
-        <v-btn :to="{ name: 'home' }" text="Home"></v-btn>
-        <v-btn :to="{ name: 'about' }" text="About"></v-btn>
-        <v-btn :to="{ name: 'catalog' }" text="Catalog"></v-btn>
         <v-btn
+          prepend-icon="mdi-home"
+          :to="{ name: 'home' }"
+          text="Home"
+        ></v-btn>
+        <v-btn
+          prepend-icon="mdi-information"
+          :to="{ name: 'about' }"
+          text="About"
+        ></v-btn>
+        <v-btn
+          prepend-icon="mdi-cart"
+          :to="{ name: 'catalog' }"
+          text="Catalog"
+        ></v-btn>
+        <v-btn
+          prepend-icon="mdi-account-off"
           v-if="!useUsers.checkCurrentUser()"
           :to="{ name: 'login' }"
           text="Account"
         ></v-btn>
-        <v-btn v-else :to="{ name: 'login' }"
+        <v-btn prepend-icon="mdi-account" v-else :to="{ name: 'login' }"
           >Account ({{ useUsers.currentUser?.Login }})</v-btn
         >
-        <v-btn :to="{ name: 'adminka' }" text="Adminka"></v-btn>
+        <v-btn
+          prepend-icon="mdi-security"
+          :to="{ name: 'adminka' }"
+          text="Adminka"
+        ></v-btn>
       </v-app-bar>
       <Popup :popup="popup" />
       <router-view />

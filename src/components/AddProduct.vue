@@ -6,6 +6,7 @@
     <v-col cols="12" md="6">
       <h2 class="text-center">Information</h2>
       <v-text-field 
+        prepend-inner-icon="mdi-rename"
         name="name" 
         :counter="42" 
         label="Product name" 
@@ -14,6 +15,7 @@
       ></v-text-field>
       
       <v-textarea 
+        prepend-inner-icon="mdi-rename"
         label="description" 
         name="description" 
         v-model="newProduct.description"
@@ -22,6 +24,7 @@
       ></v-textarea>
       
       <v-text-field 
+        prepend-inner-icon="mdi-cash-edit"
         name="price" 
         :counter="10" 
         v-model="newProduct.price" 
@@ -31,6 +34,7 @@
       ></v-text-field>
       
       <v-text-field 
+        prepend-inner-icon="mdi-link-edit"
         name="url" 
         label="Url image" 
         v-model="newProduct.imageUrl" 
