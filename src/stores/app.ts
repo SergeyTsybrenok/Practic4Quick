@@ -9,7 +9,7 @@ import type { HistoryOrder } from "@/types/history";
 export const useAppStore = defineStore("app", () => {
   const users = ref<User[]>([]);
   const maxId = ref<number>(0);
-  const lastVisitedName = ref<string>('user-account');
+  const lastVisitedName = ref<string>("user-account");
 
   let currentUser = ref<User>();
 
@@ -19,10 +19,10 @@ export const useAppStore = defineStore("app", () => {
 
   // Я не хочу прокидывать саму переменную в export, чтобы она не сохранялась в json файл
   function getLastPage(): string {
-    return lastVisitedName.value
+    return lastVisitedName.value;
   }
 
-  function loadStoreData(data:any) {
+  function loadStoreData(data: any) {
     if (data.users) users.value = data.users;
     if (data.maxId) maxId.value = data.maxId;
     //TODO throw error parser
@@ -90,21 +90,23 @@ export const useAppStore = defineStore("app", () => {
 
   function order() {
     if (!checkCurrentUser) return;
-    
+
     const newHistoryOrder: HistoryOrder = {
       productLinks: currentUser.value?.Card as ProductLink[],
-      orderDate: new Date()
-    }
+      orderDate: new Date(),
+    };
     currentUser.value?.History?.push(newHistoryOrder);
 
     currentUser.value?.Card?.splice(0); //Delete all product from cart
   }
 
-  function inFavorite(productId:number): boolean {
-    return currentUser.value?.Likes?.some((like) => like === productId) as boolean;
+  function inFavorite(productId: number): boolean {
+    return currentUser.value?.Likes?.some(
+      (like) => like === productId,
+    ) as boolean;
   }
 
-  function tryAddToFavorite(productId:number) {
+  function tryAddToFavorite(productId: number) {
     if (!inFavorite(productId)) {
       if (!currentUser.value?.Likes && currentUser.value) {
         currentUser.value.Likes = [] as number[];
@@ -113,9 +115,11 @@ export const useAppStore = defineStore("app", () => {
     }
   }
 
-  function tryRemoveFromFavorite(productId:number) {
+  function tryRemoveFromFavorite(productId: number) {
     if (inFavorite(productId)) {
-      const index: number = currentUser.value?.Likes?.findIndex((likeId) => productId === likeId) as number;
+      const index: number = currentUser.value?.Likes?.findIndex(
+        (likeId) => productId === likeId,
+      ) as number;
       currentUser.value?.Likes?.splice(index, 1);
     }
   }
@@ -163,6 +167,13 @@ export const useAppStore = defineStore("app", () => {
 
     const index = users.value.findIndex((user) => user.id === id);
     if (index !== -1) {
+      if (
+        currentUser.value === users.value[index] &&
+        currentUser.value.Admin === false
+      ) {
+        logout();
+      }
+
       users.value.splice(index, 1);
     }
   }
