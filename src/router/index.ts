@@ -15,6 +15,7 @@ import UserShopCard from '@/components/UserShopCard.vue'
 import JsonProject from '@/components/JsonProject.vue'
 import { useAppStore } from '@/stores/app'
 import UserFavorite from '@/components/UserFavorite.vue'
+import Error404 from '@/pages/error404.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -95,7 +96,7 @@ const router = createRouter({
     },
     {
       path: "/:pathMatch(.*)*",
-      redirect: { name: "catalog" } //TODO to page 404
+      component: Error404,
     }
   ],
 })
