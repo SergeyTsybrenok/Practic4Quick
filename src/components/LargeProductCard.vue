@@ -5,7 +5,7 @@
         <v-btn
           @click="router.back()"
           prepend-icon="mdi-arrow-left"
-          variant="text"
+          variant="flat"
           class="mb-4"
         >
           Back
@@ -15,7 +15,7 @@
 
     <v-row v-if="product">
       <v-col cols="12" md="6">
-        <v-img :src="product.imageUrl" height="auto" cover class="rounded" />
+        <v-img :src="product.imageUrl" class="rounded" />
       </v-col>
 
       <v-col cols="12" md="6">
@@ -35,8 +35,7 @@
             <p class="text-body-1">{{ product.description }}</p>
           </v-card-text>
 
-          <v-card-actions>
-            <Favorite :product="product" :use-users="useUsers" />
+          <v-card-actions class="w-75">
 
             <v-btn
               v-if="
@@ -71,6 +70,7 @@
             >
               Log in to add to cart
             </v-btn>
+            <Favorite :product="product" :use-users="useUsers" />
           </v-card-actions>
         </v-card>
       </v-col>

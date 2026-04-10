@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="w-100 justify-around">
     <h2>Account {{ useUsers.currentUser?.Login }}</h2>
 
     <v-btn
@@ -42,6 +42,7 @@
       prepend-icon="mdi-exit-to-app"
       v-show="useUsers.checkCurrentUser()"
       @click="signOut()"
+      color="red-darken-4"
       >Sign out</v-btn
     >
     <router-view />

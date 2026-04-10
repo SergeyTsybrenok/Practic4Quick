@@ -35,7 +35,12 @@
       <Popup :popup="popup" />
       <router-view />
     </v-main>
-    <Footer />
+    <v-footer
+      class="d-flex align-center justify-center flex-wrap flex-grow-1 py-3"
+      style="max-height: 80px;"
+    >
+      <div class="flex-1-0-100 text-center mt-2">by Rose</div>
+    </v-footer>
   </v-app>
 </template>
 

@@ -12,9 +12,15 @@
       </v-col>
     </v-row>
 
-    <div v-if="useUsers.currentUser?.Card?.length as number > 0">
+    <div v-if="(useUsers.currentUser?.Card?.length as number) > 0">
       <h3>Total price: {{ currencyFormatter.format(totalPrice) }}</h3>
-      <v-btn @click="order()" color="green" variant="elevated">Order</v-btn>
+      <v-btn
+        @click="order()"
+        color="green"
+        variant="elevated"
+        prepend-icon="mdi-gas-station"
+        >Order</v-btn
+      >
     </div>
 
     <v-card class="mx-auto" v-else>

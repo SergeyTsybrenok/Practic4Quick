@@ -1,23 +1,32 @@
 <template>
-  <v-card
-    class="mx-auto"
-    max-width="344"
-    min-width="285"
-    link
-    @click="goToProductDetailed()"
-  >
-    <v-img height="200px" :src="product.imageUrl" cover />
+  <v-card class="mx-auto" width="320" link @click="goToProductDetailed()">
+    <v-img height="200px" :src="product.imageUrl" cover>
+      <template #error>
+        <v-img
+          src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fallthatsinteresting.com%2Fwordpress%2Fwp-content%2Fuploads%2F2015%2F06%2Fworst-cars-vega.jpg&f=1&nofb=1&ipt=c9083ff540855f4bb8349d2151fa7c8bb641947a867841b366dee2428b329ac4"
+          cover
+          class="d-flex flex-row align-center justify-center text-center"
+        >
+          <v-sheet color="rgba(0,0,0,0.7)" class="pa-2 h-100">
+            <v-icon size="50"> mdi-alert-box </v-icon>
+            <p class="text-h2 font-weight-bold">Image Missing</p>
+          </v-sheet>
+        </v-img>
+      </template>
+    </v-img>
 
     <v-card-title primary-title>
       <div>
-        <h3>{{ product.name }}</h3>
-        <div>{{ currencyFormatter.format(product.price) }}</div>
+        <h3 class="text-headline-small font-weight-bold my-2">{{ product.name }}</h3>
+        <div class="text-primary mb-1">
+          {{ currencyFormatter.format(product.price) }}
+        </div>
       </div>
     </v-card-title>
 
     <v-card-actions class="flex-column align-stretch">
       <div class="d-flex align-center w-100 md-2">
-        <div class="flex-grow-1 mr-2">
+        <div class="flex-grow-1 mt-3">
           <v-btn
             v-if="
               useUsers.checkCurrentUser() &&
@@ -25,7 +34,9 @@
             "
             @click.stop="useUsers.tryAddProductToCard(product.id as number)"
             color="primary"
+            prepend-icon="mdi-cart"
             block
+            variant="tonal"
             size="large"
           >
             Add to cart
@@ -38,7 +49,9 @@
             @click.stop="
               useUsers.tryRemoveProductFromCard(product.id as number)
             "
-            color="secondary"
+            prepend-icon="mdi-cart-off"
+            color="red-lighten-3"
+            variant="tonal"
             block
             size="large"
           >
@@ -49,6 +62,7 @@
             @click.stop
             :to="{ name: 'login' }"
             color="secondary"
+            variant="outlined"
             block
             size="large"
           >
@@ -57,7 +71,7 @@
         </div>
         <Favorite :product="product" :use-users="useUsers" />
       </div>
-      <div v-if="props.inCart && props.inCart" class="w-100 mt-1">
+      <div v-if="props.inCart" class="w-100 mt-1">
         <v-number-input
           density="compact"
           label="Count"
@@ -86,10 +100,15 @@ import { useRouter } from "vue-router";
 import Favorite from "./sub-components/Favorite.vue";
 import type { ProductLink } from "@/types/productLink";
 import { usePopup } from "@/composables/usePopup";
+import { ref } from "vue";
 
 const router = useRouter();
 const useUsers = useAppStore();
 const popup = usePopup();
+
+const errorImageUrl = ref(
+  "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fallthatsinteresting.com%2Fwordpress%2Fwp-content%2Fuploads%2F2015%2F06%2Fworst-cars-vega.jpg&f=1&nofb=1&ipt=c9083ff540855f4bb8349d2151fa7c8bb641947a867841b366dee2428b329ac4",
+);
 
 const props = withDefaults(
   defineProps<{
@@ -99,7 +118,7 @@ const props = withDefaults(
   }>(),
   {
     inCart: false,
-    productLink: () => ({ productId: 1, count: 1}) //Fix Error
+    productLink: () => ({ productId: 1, count: 1 }), //Fix Error
   },
 );
 

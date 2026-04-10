@@ -6,6 +6,7 @@
 
 // Composables
 import { createVuetify } from "vuetify";
+import { md3 } from "vuetify/blueprints";
 // Styles
 import "@mdi/font/css/materialdesignicons.css";
 
