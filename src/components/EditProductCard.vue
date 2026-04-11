@@ -28,10 +28,6 @@
         ></v-text-field>
       </div>
     </v-card-title>
-
-    <v-card-actions>
-      <v-btn color="primary">See more</v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 

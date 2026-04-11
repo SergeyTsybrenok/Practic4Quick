@@ -2,7 +2,7 @@
   <v-container>
     <h1>Catalog</h1>
     <v-row>
-      <v-col v-for="product in products" md="6" lg="5" xl="3">
+      <v-col v-for="product in products" md="6" lg="4" xl="3">
         <ProductCard :product="product" />
       </v-col>
     </v-row>

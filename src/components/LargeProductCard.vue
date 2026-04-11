@@ -14,11 +14,11 @@
     </v-row>
 
     <v-row v-if="product">
-      <v-col cols="12" md="6">
+      <v-col cols="12" lg="6">
         <v-img :src="product.imageUrl" class="rounded" />
       </v-col>
 
-      <v-col cols="12" md="6">
+      <v-col cols="12" lg="6">
         <v-card>
           <v-card-title class="text-h4">
             {{ product.name }}
@@ -35,42 +35,8 @@
             <p class="text-body-1">{{ product.description }}</p>
           </v-card-text>
 
-          <v-card-actions class="w-75">
-
-            <v-btn
-              v-if="
-                useUsers.checkCurrentUser() &&
-                !useUsers.haveProductInCard(product.id as number)
-              "
-              @click="useUsers.tryAddProductToCard(product.id as number)"
-              color="primary"
-              block
-              size="large"
-            >
-              Add to cart
-            </v-btn>
-            <v-btn
-              v-else-if="
-                useUsers.checkCurrentUser() &&
-                useUsers.haveProductInCard(product.id as number)
-              "
-              @click="useUsers.tryRemoveProductFromCard(product.id as number)"
-              color="secondary"
-              block
-              size="large"
-            >
-              Remove from card
-            </v-btn>
-            <v-btn
-              v-else
-              @click="pushToLogin()"
-              color="secondary"
-              block
-              size="large"
-            >
-              Log in to add to cart
-            </v-btn>
-            <Favorite :product="product" :use-users="useUsers" />
+          <v-card-actions class="flex-column align-stretch">
+            <ProductCartButton :product="product" :use-users="useUsers" />
           </v-card-actions>
         </v-card>
       </v-col>
@@ -96,6 +62,7 @@ import { useProductStore } from "@/stores/useProductStore";
 import { useAppStore } from "@/stores/app";
 import { currencyFormatter } from "@/tools/formatters";
 import Favorite from "./sub-components/Favorite.vue";
+import ProductCartButton from "./sub-components/ProductCartButton.vue";
 
 const route = useRoute();
 const router = useRouter();

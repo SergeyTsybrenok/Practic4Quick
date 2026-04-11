@@ -1,7 +1,7 @@
 <template>
   <h2>Edit products</h2>
   <v-row>
-    <v-col v-for="product in products" :key="product.id" md="6" lg="5" xl="3">
+    <v-col v-for="product in products" :key="product.id" col="12" md="6" lg="4" xl="3">
       <EditProductCard :product="product" />
     </v-col>
   </v-row>
