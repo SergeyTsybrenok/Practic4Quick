@@ -44,22 +44,7 @@
           {{ currencyFormatter.format(product.price) }}
         </div>
       </div>
-      <div class="d-flex flex-wrap text-h6 my-2 ga-2 text-title-medium">
-        <v-chip :color="product.color.toLocaleLowerCase()+'-darken-3'" prepend-icon="mdi-palette">{{ product.color }}</v-chip>
-        <v-chip prepend-icon="mdi-keyboard">{{ product.switch }}</v-chip>
-        <v-chip prepend-icon="mdi-overscan">{{ product.size }}%</v-chip>
-        <v-chip prepend-icon="mdi-palette-swatch">{{ product.keycaps }}</v-chip>
-        <v-chip prepend-icon="mdi-apple-keyboard-caps" v-if="product.hotswap">
-          HotSwap
-        </v-chip>
-        <v-chip prepend-icon="mdi-arrange-send-to-back" v-if="product.split">
-          Split
-        </v-chip>
-        <v-chip prepend-icon="mdi-cable-data" v-if="!product.wireless">
-          Wired
-        </v-chip>
-        <v-chip prepend-icon="mdi-rss" v-else> Wireless </v-chip>
-      </div>
+      <ProductChips :product="product"/>
     </v-card-title>
 
     <v-card-actions class="flex-column align-stretch">
@@ -84,6 +69,7 @@ import { usePopup } from "@/composables/usePopup";
 import { ref } from "vue";
 import ProductCartButton from "./sub-components/ProductCartButton.vue";
 import { darken } from "vuetify/lib/util/colorUtils.mjs";
+import ProductChips from "./sub-components/ProductChips.vue";
 
 const router = useRouter();
 const useUsers = useAppStore();

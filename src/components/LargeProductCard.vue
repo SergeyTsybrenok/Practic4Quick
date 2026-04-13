@@ -30,6 +30,7 @@
             </div>
 
             <v-divider class="my-4"></v-divider>
+            <ProductChips :product="product"/>
 
             <h3 class="text-h6 mb-2">Description:</h3>
             <p class="text-body-1" style="white-space: pre-line">
@@ -68,6 +69,7 @@ import { useProductStore } from "@/stores/useProductStore";
 import { useAppStore } from "@/stores/app";
 import { currencyFormatter } from "@/tools/formatters";
 import ProductCartButton from "./sub-components/ProductCartButton.vue";
+import ProductChips from "./sub-components/ProductChips.vue";
 
 const route = useRoute();
 const router = useRouter();
