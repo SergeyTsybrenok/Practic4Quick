@@ -181,6 +181,11 @@ export const useAppStore = defineStore("app", () => {
     }
   }
 
+  function deleteData() {
+    users.value.splice(0)
+    maxId.value = 0;
+  }
+
   return {
     users,
     currentUser,
@@ -202,6 +207,7 @@ export const useAppStore = defineStore("app", () => {
     inFavorite,
     setLastPage,
     getLastPage,
+    deleteData,
   };
   // TODO incapsulate currentUser
 });

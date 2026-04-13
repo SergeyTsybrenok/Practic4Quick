@@ -31,12 +31,18 @@ export const useProductStore = defineStore('product', () => { //PINIA
     return products.value[index];
   }
 
+  function deleteData() {
+    products.value.splice(0)
+    maxId.value = 0;
+  }
+
   return {
     products,
     maxId,
     loadStoreData,
     addProduct,
     removeProductByIndex,
-    getProductByIndex
+    getProductByIndex,
+    deleteData
   };
 });

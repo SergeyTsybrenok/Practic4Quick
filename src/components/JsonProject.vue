@@ -1,28 +1,67 @@
 <template>
   <v-container>
     <v-row>
-      <h2 class="text-center"></h2>
-
-      <v-col md="4">
-        <h2>Json data</h2>
-        <div>
-          Use default.json in project directory to load default parameters
-        </div>
-        <br />
+      <h2 class="text-center">Json data</h2>
+      <v-col md="12">
+        <h3 class="mt-8 mb-1">Load</h3>
+        <div>Use default.json in project directory to load default data</div>
         <span>Or</span>
+        <div>Load your data from file</div>
 
-        <div>
+        <div class="d-flex ga-3">
           <v-file-input
+            density="comfortable"
             label="Drag and Drop .json here"
             prepend-icon="mdi-database-import"
             accept=".json"
             v-model="Files"
           ></v-file-input>
-          <v-btn :disabled="!Files" @click="loadData()" color="info"
+          <v-btn
+            size="large"
+            :disabled="!Files"
+            @click="loadData()"
+            color="info"
             >Load</v-btn
           >
         </div>
-        <v-btn @click="ExampleDownload()">Download current data</v-btn>
+
+        <h3 class="mt-8 mb-1">Save</h3>
+        <v-btn color="green" @click="ExampleDownload()"
+          >Download current data</v-btn
+        >
+
+        <h3 class="mt-8 mb-1">Delete</h3>
+
+        <v-dialog max-width="600">
+          <template v-slot:activator="{ props: activatorProps }">
+            <v-btn
+              v-bind="activatorProps"
+              color="error"
+              text="Delete data"
+            ></v-btn>
+          </template>
+
+          <template v-slot:default="{ isActive }">
+            <v-card title="Are you sure?">
+              <v-card-text>
+                All data after this action will
+                be deleted, and you will not be able to recover it (local
+                storage too).
+                <div class="mt-2">Do you want to delete all data?</div>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  text="No"
+                  @click="isActive.value = false"
+                ></v-btn>
+                <v-btn @click="isActive.value = false; deleteAllData()" color="error">Yes, delete</v-btn>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </v-dialog>
       </v-col>
     </v-row>
   </v-container>
@@ -38,6 +77,17 @@ import { useRules } from "vuetify/labs/rules";
 
 const useUsers = useAppStore();
 const products = useProductStore();
+const popup = usePopup();
+
+const Files = ref();
+const jsonFiles = ref();
+
+function deleteAllData() {
+  useUsers.deleteData();
+  products.deleteData();
+
+  popup.showMessage("Data is deleted", "warning");
+}
 
 function ExampleDownload() {
   const saveData: object = {
@@ -45,13 +95,8 @@ function ExampleDownload() {
     products: products.$state,
   };
   downloadObjectAsJSONFile(saveData, new Date().toLocaleTimeString());
-  popup.showMessage("Data was downloaded", "success");
+  popup.showMessage("Trying to save data", "success");
 }
-
-const popup = usePopup();
-
-const Files = ref();
-const jsonFiles = ref();
 
 // use watch because computed not support await
 watch(Files, async (newFile) => {
@@ -83,11 +128,11 @@ function loadData() {
 
     popup.showMessage(
       "Loaded " +
-      jsonFiles.value.products.products.length +
-      " products and " +
-      jsonFiles.value.users.users.length +
-      " users from " +
-      Files.value.name,
+        jsonFiles.value.products.products.length +
+        " products and " +
+        jsonFiles.value.users.users.length +
+        " users from " +
+        Files.value.name,
       "success",
     );
   } catch (error) {
