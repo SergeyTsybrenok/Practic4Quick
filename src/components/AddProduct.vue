@@ -146,6 +146,10 @@ const showSale = ref(false);
 //   }
 // }
 
+onMounted(() => {
+  newProduct.salePrice = 0;
+});
+
 function toggleSale() {
   if (showSale.value === true) {
     newProduct.salePrice = 0;
@@ -178,20 +182,19 @@ const wireless = computed(() => {
   }
 });
 
-
 function resetForm() {
   newProduct.name = "";
   newProduct.description = "";
-  newProduct.price = 100
-  newProduct.imageUrl= "";
+  newProduct.price = 100;
+  newProduct.imageUrl = "";
   newProduct.switch = "";
-  newProduct.color= keyboardType.Color[0];
-  newProduct.size= keyboardType.Size[0];
-  newProduct.keycaps= keyboardType.Keycaps[0];
-  newProduct.wireless= false;
-  newProduct.split= false;
-  newProduct.hotswap= true;
-  newProduct.salePrice= 500;
+  newProduct.color = keyboardType.Color[0];
+  newProduct.size = keyboardType.Size[0];
+  newProduct.keycaps = keyboardType.Keycaps[0];
+  newProduct.wireless = false;
+  newProduct.split = false;
+  newProduct.hotswap = true;
+  newProduct.salePrice = 500;
 }
 
 const addProduct = () => {
