@@ -4,5 +4,12 @@ export interface Product {
     description: string;
     price: number;
     imageUrl: string;
-    type: string
+    salePrice?: number;
+    switch: string;
+    color: string;
+    size: number;
+    keycaps: string;
+    wireless: boolean;
+    split: boolean;
+    hotswap: boolean;
 }

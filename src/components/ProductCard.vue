@@ -1,7 +1,14 @@
 <template>
   <v-card class="mx-auto" width="320" link @click="goToProductDetailed()">
-    <v-img height="200px" :src="product.imageUrl" cover>
-      <v-chip class="ma-2 text-secondary opacity-100">{{ product.type }}</v-chip>
+    <v-img height="300px" :src="product.imageUrl">
+      <v-chip
+        v-if="product.salePrice && (product.salePrice as number) > 0"
+        class="ma-2 text-green"
+        lable
+        >Sale -{{
+          Math.round(100 - (product.price / product.salePrice) * 100)
+        }}%</v-chip
+      >
       <template #error>
         <v-img
           :src="errorImageUrl"
@@ -17,13 +24,41 @@
     </v-img>
 
     <v-card-title primary-title>
-      <div>
-        <h3 class="text-headline-small font-weight-bold my-2">
-          {{ product.name }}
-        </h3>
-        <div class="text-primary mb-1">
+      <h3 class="text-headline-small font-weight-bold my-2">
+        {{ product.name }}
+      </h3>
+      <div class="d-flex align-center mb-4">
+        <div
+          v-if="product.salePrice && (product.salePrice as number) > 0"
+          class="text-primary"
+        >
+          <span class="text-h4 text-primary mr-4">{{
+            currencyFormatter.format(product.price)
+          }}</span>
+          <span
+            class="text-h6 text-title-medium text-decoration-line-through text-grey"
+            >{{ currencyFormatter.format(product.salePrice) }}</span
+          >
+        </div>
+        <div v-else class="text-primary">
           {{ currencyFormatter.format(product.price) }}
         </div>
+      </div>
+      <div class="d-flex flex-wrap text-h6 my-2 ga-2 text-title-medium">
+        <v-chip :color="product.color.toLocaleLowerCase()+'-darken-3'" prepend-icon="mdi-palette">{{ product.color }}</v-chip>
+        <v-chip prepend-icon="mdi-keyboard">{{ product.switch }}</v-chip>
+        <v-chip prepend-icon="mdi-overscan">{{ product.size }}%</v-chip>
+        <v-chip prepend-icon="mdi-palette-swatch">{{ product.keycaps }}</v-chip>
+        <v-chip prepend-icon="mdi-apple-keyboard-caps" v-if="product.hotswap">
+          HotSwap
+        </v-chip>
+        <v-chip prepend-icon="mdi-arrange-send-to-back" v-if="product.split">
+          Split
+        </v-chip>
+        <v-chip prepend-icon="mdi-cable-data" v-if="!product.wireless">
+          Wired
+        </v-chip>
+        <v-chip prepend-icon="mdi-rss" v-else> Wireless </v-chip>
       </div>
     </v-card-title>
 
@@ -47,6 +82,7 @@ import type { ProductLink } from "@/types/productLink";
 import { usePopup } from "@/composables/usePopup";
 import { ref } from "vue";
 import ProductCartButton from "./sub-components/ProductCartButton.vue";
+import { darken } from "vuetify/lib/util/colorUtils.mjs";
 
 const router = useRouter();
 const useUsers = useAppStore();

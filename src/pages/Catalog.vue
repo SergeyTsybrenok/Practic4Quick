@@ -9,7 +9,7 @@
         required
       ></v-text-field>
       <v-select
-        :items="carType"
+        :items="keyboardType.Switch"
         v-model="searchType"
         label="Type"
         multiple
@@ -27,8 +27,7 @@
 <script setup lang="ts">
 import ProductCard from "@/components/ProductCard.vue";
 import { useProductStore } from "@/stores/useProductStore";
-import carType from "@/types/carType";
-import type { Product } from "@/types/product";
+import keyboardType from "@/types/keyboardType";
 import { computed, reactive, ref } from "vue";
 
 const { products, addProduct, removeProductByIndex } = useProductStore();
@@ -42,9 +41,8 @@ const searchedProducts = computed(() => {
 
   const searchLower = searchText.value.toLocaleLowerCase();
   return products.filter(
-    (products) =>
-      products.name.toLocaleLowerCase().includes(searchLower)
-      // || products.type.toLocaleLowerCase().includes(searchLower),
+    (products) => products.name.toLocaleLowerCase().includes(searchLower),
+    // || products.type.toLocaleLowerCase().includes(searchLower),
   );
 });
 </script>
