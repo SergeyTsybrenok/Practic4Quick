@@ -2,12 +2,12 @@ import { ref } from "vue";
 import type { Product } from "@/types/product";
 import { defineStore } from "pinia";
 
-
-export const useProductStore = defineStore('product', () => { //PINIA
+export const useProductStore = defineStore("product", () => {
+  //PINIA
   const products = ref<Product[]>([]);
   const maxId = ref(0);
 
-  function loadStoreData(data:any) {
+  function loadStoreData(data: any) {
     if (data.products) products.value = data.products;
     if (data.maxId) maxId.value = data.maxId;
   }
@@ -15,10 +15,23 @@ export const useProductStore = defineStore('product', () => { //PINIA
   function addProduct(newProduct: Product) {
     newProduct.id = maxId.value;
     products.value.push(newProduct);
-    maxId.value = maxId.value +1;
+    maxId.value = maxId.value + 1;
 
     console.log(maxId.value);
     console.log(products.value);
+  }
+
+  function getIndexFromProduct(productToFindIndex: Product): number {
+    const index: number = products.value.findIndex((product) => {
+      return product.id === productToFindIndex.id;
+    });
+    return index;
+  }
+
+  function replaceProduct(updateProduct: Product) {
+    const index = products.value.findIndex(p => p.id === updateProduct.id);
+
+    products.value.splice(index, 1, updateProduct);
   }
 
   function removeProductByIndex(index: number) {
@@ -32,7 +45,7 @@ export const useProductStore = defineStore('product', () => { //PINIA
   }
 
   function deleteData() {
-    products.value.splice(0)
+    products.value.splice(0);
     maxId.value = 0;
   }
 
@@ -43,6 +56,7 @@ export const useProductStore = defineStore('product', () => { //PINIA
     addProduct,
     removeProductByIndex,
     getProductByIndex,
-    deleteData
+    deleteData,
+    replaceProduct,
   };
 });

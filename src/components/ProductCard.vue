@@ -68,6 +68,7 @@
         :use-users="useUsers"
         :in-cart="inCart"
         :product-link="productLink"
+        :in-edit="inEdit"
       />
     </v-card-actions>
   </v-card>
@@ -97,9 +98,11 @@ const props = withDefaults(
     product: Product;
     productLink?: ProductLink;
     inCart?: boolean;
+    inEdit?: boolean;
   }>(),
   {
     inCart: false,
+    inEdit: false,
     productLink: () => ({ productId: 1, count: 1 }), //Fix Error
   },
 );

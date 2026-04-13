@@ -1,5 +1,13 @@
 <template>
   <v-container>
+    <div v-if="isEditProduct">
+      <v-btn
+        text="Back"
+        prepend-icon="mdi-arrow-left"
+        @click="router.back()"
+      ></v-btn>
+      <h2 class="text-center">Editor</h2>
+    </div>
     <v-form @submit.prevent>
       <v-row>
         <v-col cols="12" md="6">
@@ -114,9 +122,25 @@
 
       <v-row justify="center" class="mt-4">
         <v-col cols="auto">
-          <v-btn @click="addProduct" type="submit" size="large" color="success"
-            >Add</v-btn
-          >
+          <v-btn
+            v-if="!isEditProduct"
+            @click="addProduct()"
+            type="submit"
+            size="large"
+            color="success"
+            text="Add"
+          ></v-btn>
+          <div class="d-flex ga-4" v-else-if="isEditProduct">
+            <v-btn @click="saveEditProduct()" text="Save" color="green"></v-btn>
+            <v-btn
+              @click="
+                addProduct();
+                router.back();
+              "
+              text="Save as new"
+              color="yellow"
+            ></v-btn>
+          </div>
         </v-col>
       </v-row>
     </v-form>
@@ -129,23 +153,57 @@ import type { Product } from "@/types/product";
 import { useProductStore } from "@/stores/useProductStore";
 import { usePopup } from "@/composables/usePopup";
 import keyboardType from "@/types/keyboardType";
+import { useRoute } from "vue-router";
+import router from "@/router";
 
+const route = useRoute();
 const popup = usePopup();
-const product = useProductStore();
+const productStore = useProductStore();
 
 const showSale = ref(false);
-// function comparePriceAndSalePrice() {
-//   if (newProduct.price >= newProduct.salePrice) {
-//     newProduct.salePrice += newProduct.price + 500;
-//     popup.showMessage(
-//       "Please make sure your sale price lower then price",
-//       "info",
-//     );
-//   }
-// }
+let isEditProduct = ref(false);
+
+// TODO add sale check (price lower then salePrice)
 
 onMounted(() => {
   newProduct.salePrice = 0;
+  if (editedProduct.value?.name) {
+    popup.showMessage(
+      ("Edit " +
+        editedProduct.value?.name +
+        ` (id: ${editedProduct.value.id})`) as string,
+      "info",
+    );
+    isEditProduct.value = true;
+    setUpEditProduct(editedProduct.value);
+  }
+});
+
+function setUpEditProduct(product: Product) {
+  newProduct.id = product.id;
+  newProduct.name = product.name;
+  newProduct.description = product.description;
+  newProduct.price = product.price;
+  newProduct.imageUrl = product.imageUrl;
+  newProduct.switch = product.switch;
+  newProduct.color = product.color;
+  newProduct.size = product.size;
+  newProduct.keycaps = product.keycaps;
+  newProduct.wireless = product.wireless;
+  newProduct.split = product.split;
+  newProduct.hotswap = product.hotswap;
+  if (product.salePrice) {
+    newProduct.salePrice = product.salePrice;
+    showSale.value = true;
+  } else {
+    newProduct.salePrice = 0;
+    showSale.value = false;
+  }
+}
+
+const editedProduct = computed(() => {
+  const id = Number(route.params.id);
+  return productStore.products.find((p) => p.id === id);
 });
 
 function toggleSale() {
@@ -197,6 +255,27 @@ function resetForm() {
   }
 }
 
+function saveEditProduct() {
+  const productToAdd: Product = {
+    id: newProduct.id,
+    name: newProduct.name,
+    description: newProduct.description,
+    price: newProduct.price,
+    imageUrl: newProduct.imageUrl,
+    switch: newProduct.switch,
+    color: newProduct.color,
+    size: newProduct.size,
+    keycaps: newProduct.keycaps,
+    wireless: newProduct.wireless,
+    split: newProduct.split,
+    hotswap: newProduct.hotswap,
+    salePrice: newProduct.salePrice,
+  };
+  productStore.replaceProduct(productToAdd);
+  popup.showMessage("Product save", "success");
+  router.back();
+}
+
 const addProduct = () => {
   if (
     newProduct.name &&
@@ -219,9 +298,9 @@ const addProduct = () => {
       split: newProduct.split,
       hotswap: newProduct.hotswap,
       salePrice: newProduct.salePrice,
-    }
+    };
 
-    product.addProduct(productToAdd);
+    productStore.addProduct(productToAdd);
 
     resetForm();
   } else {

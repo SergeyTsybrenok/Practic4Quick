@@ -92,6 +92,7 @@ const router = createRouter({
         {path: 'editProducts', component: EditProducts, name: 'editProducts'},
         {path: 'users', component: Users, name: 'users'},
         {path: 'json', component: JsonProject, name: 'json'},
+        {path: 'editProduct/:id', component: AddProduct, name: 'editProduct'},
       ]
     },
     {
@@ -99,6 +100,12 @@ const router = createRouter({
       component: Error404,
     }
   ],
-})
+});
+
+router.beforeEach((to, from, next) => {
+  console.log(from.name);
+  console.log(to.name);
+  next();
+});
 
 export default router

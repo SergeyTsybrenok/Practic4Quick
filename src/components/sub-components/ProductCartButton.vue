@@ -2,7 +2,18 @@
   <div class="d-flex align-center ga-2 md-2" max-width="100">
     <div class="flex-grow-1">
       <v-btn
-        v-if="
+        v-if="inEdit"
+        @click.stop
+        :to="{ name: 'editProduct', params: { id: product.id } }"
+        color="secondary"
+        variant="flat"
+        block
+        size="large"
+        text="Edit"
+      >
+      </v-btn>
+      <v-btn
+        v-else-if="
           useUsers.checkCurrentUser() &&
           !useUsers.haveProductInCard(product.id as number)
         "
@@ -43,22 +54,22 @@
         Log in to add to cart
       </v-btn>
     </div>
-      <v-number-input
-        v-if="
-          !props.inCart &&
-          useUsers.checkCurrentUser() &&
-          inDetails &&
-          !useUsers.haveProductInCard(product.id)
-        "
-        class="mt-5"
-        density="compact"
-        label="Count"
-        :max="100"
-        :min="1"
-        v-model="productCount"
-        control-variant="split"
-        @click.stop
-      ></v-number-input>
+    <v-number-input
+      v-if="
+        !props.inCart &&
+        useUsers.checkCurrentUser() &&
+        inDetails &&
+        !useUsers.haveProductInCard(product.id)
+      "
+      class="mt-5"
+      density="compact"
+      label="Count"
+      :max="100"
+      :min="1"
+      v-model="productCount"
+      control-variant="split"
+      @click.stop
+    ></v-number-input>
     <Favorite :product="product" :use-users="useUsers" />
   </div>
   <div v-if="props.inCart" class="w-100 mt-1">
@@ -94,10 +105,12 @@ const props = withDefaults(
     productLink?: ProductLink;
     inCart?: boolean;
     inDetails?: boolean;
+    inEdit?: boolean;
   }>(),
   {
     inCart: false,
     inDetails: false,
+    inEdit: false,
     productLink: () => ({ productId: 1, count: 1 }), //Fix Error
   },
 );
